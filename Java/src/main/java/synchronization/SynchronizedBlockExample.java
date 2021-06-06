@@ -1,6 +1,6 @@
 package synchronization;
 
-public class SynchExample {
+public class SynchronizedBlockExample {
     public static void main(String[] args) {
         Printer printer = new Printer();
         CustomThread thread1 = new CustomThread(printer,"Thread 1");
