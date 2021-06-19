@@ -8,30 +8,34 @@ public class SynchronizedBlockExample {
         thread1.start();
         thread2.start();
     }
-}
 
-class Printer{
-    void printPages(){
-        for (int i=0;i<5;i++){
-            System.out.println("Printing page - "+i+" from "+Thread.currentThread().getName());
+    static class Printer{
+        void printPages(){
+            for (int i=0;i<5;i++){
+                System.out.println("Printing page - "+i+" from "+Thread.currentThread().getName());
+            }
+        }
+    }
+
+    static class CustomThread extends Thread{
+        Printer printer;
+        String name;
+
+        public CustomThread(Printer printer, String name) {
+            this.printer = printer;
+            this.name = name;
+
+        }
+        @Override
+        public void run() {
+            Thread.currentThread().setName(name);
+            synchronized (printer){
+                printer.printPages();
+            }
         }
     }
 }
 
-class CustomThread extends Thread{
-    Printer printer;
-    String name;
 
-    public CustomThread(Printer printer, String name) {
-        this.printer = printer;
-        this.name = name;
 
-    }
-    @Override
-    public void run() {
-        Thread.currentThread().setName(name);
-        synchronized (printer){
-            printer.printPages();
-        }
-    }
-}
+
