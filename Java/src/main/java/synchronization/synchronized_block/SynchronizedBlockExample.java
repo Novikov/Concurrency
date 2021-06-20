@@ -1,6 +1,6 @@
-package synchronization;
+package synchronization.synchronized_block;
 
-public class SynchronizedMethodExample {
+public class SynchronizedBlockExample {
     public static void main(String[] args) {
         Printer printer = new Printer();
         CustomThread thread1 = new CustomThread(printer,"Thread 1");
@@ -9,8 +9,8 @@ public class SynchronizedMethodExample {
         thread2.start();
     }
 
-    static class Printer {
-        synchronized void printPages(){
+    static class Printer{
+        void printPages(){
             for (int i=0;i<5;i++){
                 System.out.println("Printing page - "+i+" from "+Thread.currentThread().getName());
             }
@@ -29,7 +29,9 @@ public class SynchronizedMethodExample {
         @Override
         public void run() {
             Thread.currentThread().setName(name);
-            printer.printPages();
+            synchronized (printer){
+                printer.printPages();
+            }
         }
     }
 }
